@@ -16,6 +16,9 @@ def pyls_settings():
 
 @hookimpl
 def pyls_completions(config, workspace, document, position):
+    # simply return while disabling rope completions in settings does not work in this moment
+    return None
+
     # Rope is a bit rubbish at completing module imports, so we'll return None
     word = document.word_at_position({
         # The -1 should really be trying to look at the previous word, but that might be quite expensive
