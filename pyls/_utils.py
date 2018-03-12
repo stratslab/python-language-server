@@ -24,6 +24,31 @@ def debounce(interval_s):
     return wrapper
 
 
+def lint_debounce(interval_s):
+    """ Debounce calls to this function until interval_s seconds have passed.
+    Calls are debounced per document URI.
+    """
+    def wrapper(func):
+        @functools.wraps(func)
+        def debounced(*args, **kwargs):
+            if not hasattr(debounced, '_timers'):
+                debounced._timers = {}
+
+            # args should be (self, doc_uri)
+            if len(args) < 2:
+                log.warning('Missing doc uri')
+                return
+
+            doc_uri = args[1]
+            if doc_uri in debounced._timers:
+                debounced._timers[doc_uri].cancel()
+
+            debounced._timers[doc_uri] = threading.Timer(interval_s, func, args, kwargs)
+            debounced._timers[doc_uri].start()
+        return debounced
+    return wrapper
+
+
 def camel_to_underscore(string):
     s1 = FIRST_CAP_RE.sub(r'\1_\2', string)
     return ALL_CAP_RE.sub(r'\1_\2', s1).lower()
