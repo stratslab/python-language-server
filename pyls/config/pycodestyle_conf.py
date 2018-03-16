@@ -21,10 +21,16 @@ OPTIONS = [
 class PyCodeStyleConfig(ConfigSource):
 
     def user_config(self):
+        print("PyCodeStyleConfig: user config ")
         config = self.read_config_from_files(USER_CONFIGS)
-        return self.parse_config(config, CONFIG_KEY, OPTIONS)
+        res = self.parse_config(config, CONFIG_KEY, OPTIONS)
+        print(res)
+        return res
 
     def project_config(self, document_path):
+        print("PyCodeStyleConfig: project config ")
         files = find_parents(self.root_path, document_path, PROJECT_CONFIGS)
         config = self.read_config_from_files(files)
-        return self.parse_config(config, CONFIG_KEY, OPTIONS)
+        res = self.parse_config(config, CONFIG_KEY, OPTIONS)
+        print(res)
+        return res
