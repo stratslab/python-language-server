@@ -24,7 +24,7 @@ class PyCodeStyleConfig(ConfigSource):
         print("PyCodeStyleConfig: user config ")
         config = self.read_config_from_files(USER_CONFIGS)
         res = self.parse_config(config, CONFIG_KEY, OPTIONS)
-        print(res)
+        print("Res = ", res)
         return res
 
     def project_config(self, document_path):
@@ -32,5 +32,5 @@ class PyCodeStyleConfig(ConfigSource):
         files = find_parents(self.root_path, document_path, PROJECT_CONFIGS)
         config = self.read_config_from_files(files)
         res = self.parse_config(config, CONFIG_KEY, OPTIONS)
-        print(res)
+        print("Res = %s", res)
         return res
