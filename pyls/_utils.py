@@ -81,11 +81,15 @@ def find_parents(root, path, names):
     # This avoids running a loop that has different base-cases for unix/windows
     # e.g. /a/b and /a/b/c/d/e.py -> ['/a/b', 'c', 'd']
     dirs = [root] + os.path.relpath(os.path.dirname(path), root).split(os.path.sep)
+    print("dirs ", dirs)
 
     # Search each of /a/b/c, /a/b, /a
     while dirs:
+        print("while, dirs = ", dirs)
         search_dir = os.path.join(*dirs)
+        print("while, search_dir = ", search_dir)
         existing = list(filter(os.path.exists, [os.path.join(search_dir, n) for n in names]))
+        print("while, existing = ", existing)
         if existing:
             return existing
         dirs.pop()
