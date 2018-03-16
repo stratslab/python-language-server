@@ -65,6 +65,11 @@ def find_parents(root, path, names):
     Note:
         The path MUST be within the root.
     """
+    print("find parents")
+    print("root", root)
+    print("path", path)
+    print("names", names)
+
     if not root:
         return []
 
