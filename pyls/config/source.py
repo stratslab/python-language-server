@@ -29,7 +29,9 @@ class ConfigSource(object):
         raise NotImplementedError()
 
     def read_config_from_files(self, files):
+        print("read_config_from_files1, files = ", files)
         files = tuple([f for f in files if os.path.exists(f) and not os.path.isdir(f)])
+        print("read_config_from_files2, files = ", files)
         modified = tuple([os.path.getmtime(f) for f in files])
 
         if files in self._modified_times and modified == self._modified_times[files]:

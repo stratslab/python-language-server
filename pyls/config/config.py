@@ -67,6 +67,7 @@ class Config(object):
         """
         settings = {}
         sources = self._settings.get('configurationSources', DEFAULT_CONFIG_SOURCES)
+        print("Sources = ", sources)
 
         for source_name in reversed(sources):
             source = self._config_sources[source_name]
