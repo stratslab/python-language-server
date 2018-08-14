@@ -82,7 +82,8 @@ class Workspace(object):
         self._lang_server = lang_server
 
         # Whilst incubating, keep private
-        self.__rope = Project(self._root_path)
+        # rope is not used currently, so disable creating rope folder while it causes errors within docker container
+        self.__rope = Project(self._root_path, ropefolder=None)
         self.__rope.prefs.set('extension_modules', self.PRELOADED_MODULES)
 
     @property
