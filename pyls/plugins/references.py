@@ -8,7 +8,11 @@ log = logging.getLogger(__name__)
 @hookimpl
 def pyls_references(document, position, exclude_declaration=False):
     # Note that usages is not that great in a lot of cases: https://github.com/davidhalter/jedi/issues/744
-    usages = document.jedi_script(position).usages()
+    obj = document.jedi_script(position)
+
+    obj.set_debug_function()
+
+    usages = obj.usages()
 
     if exclude_declaration:
         # Filter out if the usage is the actual declaration of the thing
