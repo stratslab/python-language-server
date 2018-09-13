@@ -1,5 +1,6 @@
 # Copyright 2017 Palantir Technologies, Inc.
 import logging
+import jedi
 from . import lsp, _utils
 from .config import config
 from .language_server import LanguageServer
@@ -174,6 +175,7 @@ class PythonLanguageServer(LanguageServer):
         return self.format_range(textDocument['uri'], range)
 
     def m_text_document__references(self, textDocument=None, position=None, context=None, **_kwargs):
+        jedi.set_debug_function()
         exclude_declaration = not context['includeDeclaration']
         return self.references(textDocument['uri'], position, exclude_declaration)
 
