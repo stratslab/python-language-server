@@ -5,8 +5,6 @@ import logging
 import logging.config
 import sys
 
-import jedi
-
 from . import language_server
 from .python_ls import PythonLanguageServer
 
@@ -51,8 +49,6 @@ def main():
     add_arguments(parser)
     args = parser.parse_args()
     _configure_logger(args.verbose, args.log_config, args.log_file)
-
-    jedi.set_debug_function()
 
     if args.tcp:
         language_server.start_tcp_lang_server(args.host, args.port, PythonLanguageServer)

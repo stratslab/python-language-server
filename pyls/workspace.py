@@ -247,6 +247,7 @@ class Document(object):
         )
 
     def jedi_script(self, position=None):
+        jedi.set_debug_function()
         kwargs = {
             'source': self.source,
             'path': self.path,
