@@ -1,6 +1,5 @@
 # Copyright 2017 Palantir Technologies, Inc.
 import logging
-import jedi
 from pyls import hookimpl, uris
 
 log = logging.getLogger(__name__)
@@ -9,8 +8,6 @@ log = logging.getLogger(__name__)
 @hookimpl
 def pyls_references(document, position, exclude_declaration=False):
     # Note that usages is not that great in a lot of cases: https://github.com/davidhalter/jedi/issues/744
-    jedi.set_debug_function()
-
     usages = document.jedi_script(position).usages()
 
     if exclude_declaration:
