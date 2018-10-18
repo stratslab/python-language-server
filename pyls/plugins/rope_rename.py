@@ -1,6 +1,7 @@
 # Copyright 2017 Palantir Technologies, Inc.
 import logging
 import os
+import time
 
 from rope.base import libutils
 from rope.refactor.rename import Rename
@@ -12,18 +13,25 @@ log = logging.getLogger(__name__)
 
 @hookimpl
 def pyls_rename(config, workspace, document, position, new_name):
-    rope_config = config.settings(document_path=document.path).get('rope', {})
-    rope_project = workspace._rope_project_builder(rope_config)
+    start = time.time()
 
+    # rope_config = config.settings(document_path=document.path).get('rope', {})
+    rope_project = workspace._rope_project_builder()
+
+    log.warning('Rename path %s', document.path)
     rename = Rename(
         rope_project,
         libutils.path_to_resource(rope_project, document.path),
         document.offset_at_position(position)
     )
 
-    log.debug("Executing rename of %s to %s", document.word_at_position(position), new_name)
+    log.warning("Executing rename of %s to %s", document.word_at_position(position), new_name)
     changeset = rename.get_changes(new_name, in_hierarchy=True, docs=True)
-    log.debug("Finished rename: %s", changeset.changes)
+    log.warning("Finished rename: %s", changeset.changes)
+
+    end = time.time()
+    log.warning("Time: %s", end - start)
+
     return {
         'documentChanges': [{
             'textDocument': {
