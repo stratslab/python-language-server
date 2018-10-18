@@ -29,26 +29,27 @@ class Workspace(object):
         self._docs = {}
 
         # Whilst incubating, keep rope private
-        # self.__rope = None
-        # self.__rope_config = None
+        self.__rope = None
+        self.__rope_config = None
 
-    def _rope_project_builder(self, project_path):
+    def _rope_project_builder(self, rope_config):
+        # from rope.base.project import Project
+        #
+        # project_path = project_path if project_path else self._root_path
+        # log.warning("Rope project %s", project_path)
+        # return Project(project_path)
+
         from rope.base.project import Project
 
-        # if self.__rope is None:
-        project_path = project_path if project_path else self._root_path
-        log.warning("Rope project %s", project_path)
-        return Project(project_path)
-        #
-        # # TODO: we could keep track of dirty files and validate only those
-        # if self.__rope is None or self.__rope_config != rope_config:
-        #     rope_folder = rope_config.get('ropeFolder')
-        #     self.__rope = Project(self._root_path, ropefolder=rope_folder)
-        #     self.__rope.prefs.set('extension_modules', rope_config.get('extensionModules', []))
-        #     self.__rope.prefs.set('ignore_syntax_errors', True)
-        #     self.__rope.prefs.set('ignore_bad_imports', True)
-        # self.__rope.validate()
-        # return self.__rope
+        # TODO: we could keep track of dirty files and validate only those
+        if self.__rope is None or self.__rope_config != rope_config:
+            rope_folder = rope_config.get('ropeFolder')
+            self.__rope = Project(self._root_path, ropefolder=rope_folder)
+            self.__rope.prefs.set('extension_modules', rope_config.get('extensionModules', []))
+            self.__rope.prefs.set('ignore_syntax_errors', True)
+            self.__rope.prefs.set('ignore_bad_imports', True)
+        self.__rope.validate()
+        return self.__rope
 
     @property
     def documents(self):
