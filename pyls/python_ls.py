@@ -221,8 +221,8 @@ class PythonLanguageServer(MethodDispatcher):
             exclude_declaration=exclude_declaration
         ))
 
-    def rename(self, doc_uri, position, new_name):
-        return self._hook('pyls_rename', doc_uri, position=position, new_name=new_name)
+    def rename(self, doc_uri, position, new_name, project_path):
+        return self._hook('pyls_rename', doc_uri, position=position, new_name=new_name, project_path=project_path)
 
     def signature_help(self, doc_uri, position):
         return self._hook('pyls_signature_help', doc_uri, position=position)
@@ -272,8 +272,8 @@ class PythonLanguageServer(MethodDispatcher):
         # For now we're ignoring formatting options.
         return self.format_document(textDocument['uri'])
 
-    def m_text_document__rename(self, textDocument=None, position=None, newName=None, **_kwargs):
-        return self.rename(textDocument['uri'], position, newName)
+    def m_text_document__rename(self, textDocument=None, position=None, newName=None, project_path=None, **_kwargs):
+        return self.rename(textDocument['uri'], position, newName, project_path)
 
     def m_text_document__range_formatting(self, textDocument=None, range=None, _options=None, **_kwargs):
         # Again, we'll ignore formatting options for now.

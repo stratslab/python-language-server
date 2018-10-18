@@ -12,11 +12,12 @@ log = logging.getLogger(__name__)
 
 
 @hookimpl
-def pyls_rename(config, workspace, document, position, new_name):
+def pyls_rename(config, workspace, document, position, new_name, project_path):
     start = time.time()
 
     # rope_config = config.settings(document_path=document.path).get('rope', {})
-    rope_project = workspace._rope_project_builder()
+
+    rope_project = workspace._rope_project_builder(project_path)
 
     log.warning('Rename path %s', document.path)
     rename = Rename(
