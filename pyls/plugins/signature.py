@@ -20,8 +20,10 @@ def pyls_signature_help(document, position):
         return {'signatures': []}
 
     s = signatures[0]
+    docstring = s.docstring()
+    label = docstring[:docstring.find('\n\n')]
     sig = {
-        'label': s.docstring().splitlines()[0],
+        'label': label,
         'documentation': _utils.format_docstring(s.docstring(raw=True))
     }
 
