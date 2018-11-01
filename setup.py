@@ -67,11 +67,11 @@ setup(
             'jedi_references = pyls.plugins.references',
             'jedi_signature_help = pyls.plugins.signature',
             'jedi_symbols = pyls.plugins.symbols',
-            'mccabe = pyls.plugins.mccabe_lint',
+            # 'mccabe = pyls.plugins.mccabe_lint',
             'pycodestyle = pyls.plugins.pycodestyle_lint',
             'pydocstyle = pyls.plugins.pydocstyle_lint',
             'pyflakes = pyls.plugins.pyflakes_lint',
-            'rope_completion = pyls.plugins.rope_completion',
+            # 'rope_completion = pyls.plugins.rope_completion',
             'rope_rename = pyls.plugins.rope_rename',
             'yapf = pyls.plugins.format',
         ]
