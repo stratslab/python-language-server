@@ -1,6 +1,7 @@
 # Copyright 2017 Palantir Technologies, Inc.
 import json
 import logging
+import sys
 import uuid
 
 from jsonrpc import jsonrpc2, JSONRPCResponseManager
@@ -56,6 +57,9 @@ class JSONRPCServer(object):
                         on_result(msg['result'])
                     elif 'error' in msg and on_error:
                         on_error(msg['error'])
+            except EOFError:
+                log.warning("Language server exiting due to breaking connection with client")
+                sys.exit()
             except:  # pylint: disable=bare-except
                 log.exception("Language server exiting due to uncaught exception")
                 break
