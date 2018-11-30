@@ -3,6 +3,9 @@ from pyflakes import api as pyflakes_api
 from pyls import hookimpl, lsp
 
 
+PYFLAKES_IGNORE_STATEMENT = '# pyflakes:ignore'
+
+
 @hookimpl
 def pyls_lint(document):
     reporter = PyflakesDiagnosticReport(document.lines)
@@ -33,9 +36,14 @@ class PyflakesDiagnosticReport(object):
 
     def flake(self, message):
         """ Get message like <filename>:<lineno>: <msg> """
+        lno = message.lineno - 1
+        if 0 <= lno < len(self.lines) and PYFLAKES_IGNORE_STATEMENT in self.lines[lno]:
+            # don't report this error
+            return
+
         err_range = {
-            'start': {'line': message.lineno - 1, 'character': message.col},
-            'end': {'line': message.lineno - 1, 'character': len(self.lines[message.lineno - 1])},
+            'start': {'line': lno, 'character': message.col},
+            'end': {'line': lno, 'character': len(self.lines[lno])},
         }
         self.diagnostics.append({
             'source': 'pyflakes',
