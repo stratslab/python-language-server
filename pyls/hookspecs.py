@@ -97,6 +97,16 @@ def pyls_rename(config, workspace, document, position, new_name):
     pass
 
 
+@hookspec(firstresult=True)
+def pyls_extract_method(config, workspace, document, range, new_name, replace_similar, extract_as_global):
+    pass
+
+
+@hookspec(firstresult=True)
+def pyls_extract_variable(config, workspace, document, range, new_name, replace_similar, extract_as_global):
+    pass
+
+
 @hookspec
 def pyls_settings(config):
     pass

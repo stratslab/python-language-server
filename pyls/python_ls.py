@@ -121,6 +121,14 @@ class PythonLanguageServer(LanguageServer):
     def rename(self, doc_uri, position, new_name):
         return self._hook('pyls_rename', doc_uri, position=position, new_name=new_name)
 
+    def extract_method(self, doc_uri, range, new_name, replace_similar=False, extract_as_global=False):
+        return self._hook('pyls_extract_method', doc_uri, range=range, new_name=new_name,
+                          replace_similar=replace_similar, extract_as_global=extract_as_global)
+
+    def extract_variable(self, doc_uri, range, new_name, replace_similar=False, extract_as_global=False):
+        return self._hook('pyls_extract_variable', doc_uri, range=range, new_name=new_name,
+                          replace_similar=replace_similar, extract_as_global=extract_as_global)
+
     def signature_help(self, doc_uri, position):
         return self._hook('pyls_signature_help', doc_uri, position=position)
 
@@ -168,6 +176,14 @@ class PythonLanguageServer(LanguageServer):
 
     def m_text_document__rename(self, textDocument=None, position=None, newName=None, **_kwargs):
         return self.rename(textDocument['uri'], position, newName)
+
+    def m_text_document__extract_method(self, textDocument=None, range=None, newName=None, **_kwargs):
+        return self.extract_method(textDocument['uri'], range, newName, _kwargs.get('similar', False),
+                                   _kwargs.get('global', False))
+
+    def m_text_document__extract_variable(self, textDocument=None, range=None, newName=None, **_kwargs):
+        return self.extract_variable(textDocument['uri'], range, newName, _kwargs.get('similar', False),
+                                     _kwargs.get('global', False))
 
     def m_text_document__range_formatting(self, textDocument=None, range=None, _options=None, **_kwargs):
         # Again, we'll ignore formatting options for now.

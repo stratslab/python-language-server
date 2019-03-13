@@ -73,6 +73,7 @@ setup(
             'pyflakes = pyls.plugins.pyflakes_lint',
             # 'rope_completion = pyls.plugins.rope_completion',
             'rope_rename = pyls.plugins.rope_rename',
+            'rope_extract = pyls.plugins.rope_extract',
             'yapf = pyls.plugins.format',
         ]
     },
