@@ -7,7 +7,7 @@ log = logging.getLogger(__name__)
 
 @hookimpl
 def pyls_definitions(document, position):
-    definitions = document.jedi_script(position).goto_assignments()
+    definitions = document.jedi_script(position).goto_definitions()
 
     definitions = [
         d for d in definitions
