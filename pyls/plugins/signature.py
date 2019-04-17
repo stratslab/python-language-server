@@ -21,7 +21,8 @@ def pyls_signature_help(document, position):
 
     s = signatures[0]
     docstring = s.docstring()
-    label = docstring[:docstring.find('\n\n')]
+    new_line_idx = docstring.find('\n\n')
+    label = docstring[:new_line_idx] if new_line_idx != -1 else docstring
     sig = {
         'label': label,
         'documentation': _utils.format_docstring(s.docstring(raw=True))
