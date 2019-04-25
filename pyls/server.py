@@ -30,8 +30,10 @@ class JSONRPCServer(object):
         log.debug("Server shut down, awaiting exit notification")
 
     def handle(self):
+        log.warning("handle")
         while True:
             try:
+                log.warning("before raising")
                 raise ValueError('Some exception')
                 data = self._read_message()
                 log.debug("Got message: %s", data)
