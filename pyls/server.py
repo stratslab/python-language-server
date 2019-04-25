@@ -32,6 +32,7 @@ class JSONRPCServer(object):
     def handle(self):
         while True:
             try:
+                raise ValueError('Some exception')
                 data = self._read_message()
                 log.debug("Got message: %s", data)
 
@@ -62,7 +63,7 @@ class JSONRPCServer(object):
                 sys.exit()
             except:  # pylint: disable=bare-except
                 log.exception("Language server exiting due to uncaught exception")
-                break
+                sys.exit()
 
     def call(self, method, params=None, on_result=None, on_error=None):
         """Call a method on the client."""
